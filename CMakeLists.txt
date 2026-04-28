@@ -13,7 +13,13 @@ else()
     add_compile_options(-mavx2 -mfma)#SIMD优化
 endif()
 
+#静态链接库
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Raylib as static libraries" FORCE)
+
 project(mygame)
+
+#子目录下搜索文件夹
+add_subdirectory(thirdparty/raylib-5.0)
 
 #添加源文件中的所有cpp文件
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
@@ -68,3 +74,6 @@ endif()
 
 #包含src中的所有头文件
 target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/")
+
+#链接库
+target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE raylib_static)
