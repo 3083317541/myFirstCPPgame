@@ -1,5 +1,7 @@
 #include <iostream>
 #include <raylib.h>
+#include <imgui.h>
+#include <rlImGui.h>
 
 int main()
 {
@@ -9,6 +11,9 @@ int main()
 	//初始化窗口(宽度， 高度， 标题)
 	InitWindow(800, 450, "window name");
 
+	//rlimgui初始化
+	rlImGuiSetup(true);
+
 	//主循环
 	while (!WindowShouldClose())
 	{
@@ -17,6 +22,8 @@ int main()
 		BeginDrawing();
 		//清空背景(背景颜色为灰色)
 		ClearBackground(RAYWHITE);
+	
+		rlImGuiBegin();
 
 		Color c;
 		c.r = 255; //红
@@ -29,10 +36,23 @@ int main()
 			{255, 0, 200, 255}
 			);
 
+		ImGui::Begin("test");
+
+		ImGui::Text("Hello");
+		ImGui::Button("button");
+
+		ImGui::End();
+
+		//rlimgui结束调用
+		rlImGuiEnd();
+
 		//结束绘制
 		EndDrawing();
 	}
 	
+	//rlimgui结束
+	rlImGuiShutdown();
+
 	//关闭窗口，释放内存
 	CloseWindow();
 
