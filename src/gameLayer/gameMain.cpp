@@ -1,5 +1,14 @@
 #include <raylib.h>
 #include "gameMain.h"
+#include <asserts.h>
+
+struct GameDate
+{
+
+	float positionX = 100;
+	float positionY = 100;
+
+}gameData;
 
 bool initGame()
 {
@@ -8,15 +17,15 @@ bool initGame()
 
 bool updateGame()
 {
-	Color c;
-	c.r = 255;
-	c.g = 0;
-	c.b = 200;
-	c.a = 255;
+	float deltaTime = GetFrameTime();
+	if (deltaTime > 1.f / 5) { deltaTime = 1 / 5.f; }
 
-	//绘制文本(~, X坐标，Y坐标，字体大小，颜色)
-	DrawText("Congrats! You created your first window!", 190, 200, 20, c);
+	if (IsKeyDown(KEY_A)) { gameData.positionX -= 1; }
+	if (IsKeyDown(KEY_D)) { gameData.positionX += 1; }
+	if (IsKeyDown(KEY_W)) { gameData.positionY -= 1; }
+	if (IsKeyDown(KEY_S)) { gameData.positionY += 1; }
 
+	DrawRectangle(gameData.positionX, gameData.positionY, 50, 50, c);
 
 	return true;
 }
