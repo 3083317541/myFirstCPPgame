@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_CXX_STANDARD 17)
-
+ 
 #配置变量，告诉脚本是生产构建还是开发构建
-set(PRODUCTION_BUILD OFF CACHE BOOL "Make this a production build" FORCE)
+set(PRODUCTION_BUILD ON CACHE BOOL "Make this a production build" FORCE)
 
 if(MSVC)
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release>")
@@ -76,7 +76,8 @@ elseif(APPLE OR UNIX)
 endif()
 
 #包含src中的所有头文件
-target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/")
+target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/gameLayer")
+target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src/platform")
 
 #链接库
 target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE raylib_static imgui rlimgui)
