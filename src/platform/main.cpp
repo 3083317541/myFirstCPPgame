@@ -28,7 +28,7 @@ int main()
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; //允许键盘控制
 	//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  //允许手柄控制
 
-	io.FontGlobalScale = 2.5;	//全局字体缩放
+	io.FontGlobalScale = 1.5f;	//全局字体缩放
 #pragma endregion
 
 	if (!initGame())
@@ -43,7 +43,13 @@ int main()
 
 		ClearBackground(BLACK);
 
+		if (!updateGame())
+		{
+			CloseWindow();
+		}
+
 #pragma region imgui
+
 		rlImGuiBegin();
 
 		//停靠附件
@@ -51,15 +57,9 @@ int main()
 		ImGui::PushStyleColor(ImGuiCol_DockingEmptyBg, {});
 		ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 		ImGui::PopStyleColor(2);
-#pragma endregion
 
-		if (!updateGame())
-		{
-			CloseWindow();
-		}
-
-#pragma region imgui
 		rlImGuiEnd();
+
 #pragma endregion
 
 		EndDrawing();
@@ -72,7 +72,5 @@ int main()
 #pragma region imgui
 	rlImGuiShutdown();
 #pragma endregion
-
-	CloseWindow();
 
 }

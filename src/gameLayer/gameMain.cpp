@@ -1,17 +1,24 @@
 #include <raylib.h>
 #include "gameMain.h"
 #include <asserts.h>
+#include <assetManager.h>
 
 struct GameDate
 {
 
-	float positionX = 100;
-	float positionY = 100;
+	Texture dirtTexture;
 
 }gameData;
 
+AssetManager assetManager;
+
 bool initGame()
 {
+
+	assetManager.loadAll();
+
+	gameData.dirtTexture = LoadTexture(RESOURCES_PATH "dirt.png");
+
 	return true;
 }
 
@@ -20,17 +27,13 @@ bool updateGame()
 	float deltaTime = GetFrameTime();
 	if (deltaTime > 1.f / 5) { deltaTime = 1 / 5.f; }
 
-	if (IsKeyDown(KEY_A)) { gameData.positionX -= 1; }
-	if (IsKeyDown(KEY_D)) { gameData.positionX += 1; }
-	if (IsKeyDown(KEY_W)) { gameData.positionY -= 1; }
-	if (IsKeyDown(KEY_S)) { gameData.positionY += 1; }
+	DrawTexturePro(gameData.dirtTexture, { 0, 0, (float)gameData.dirtTexture.width, (float)gameData.dirtTexture.height },
+		{ 50, 50, 100, 100 }, {}, 0, WHITE);
 
-	DrawRectangle(gameData.positionX, gameData.positionY, 50, 50, c);
 
 	return true;
 }
 
 void closeGame()
 {
-
 }
