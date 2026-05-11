@@ -15,6 +15,7 @@ void GameMap::create(int w, int h)
 
 Block& GameMap::getBlockUnsafe(int x, int y)
 {
+	//自定义断言函数，检查条件是否成立，不成立则直接报错并停止程序
 	permaAssertCommentDevelopement(mapData.size() ==
 		w * h, "Map data not initialized");
 
