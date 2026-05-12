@@ -3,8 +3,9 @@
 #include <asserts.h>
 #include <assetManager.h>
 #include <gameMap.h>
+#include <helpers.h>
 
-struct GameDate
+struct GameData
 {
 	GameMap gameMap;
 	Camera2D camera;
@@ -21,10 +22,10 @@ bool initGame()
 	gameData.gameMap.create(30, 10);
 
 	gameData.gameMap.getBlockUnsafe(0, 0).type = Block::dirt;
-	gameData.gameMap.getBlockUnsafe(1, 1).type = Block::dirt;
-	gameData.gameMap.getBlockUnsafe(2, 2).type = Block::dirt;
-	gameData.gameMap.getBlockUnsafe(3, 3).type = Block::dirt;
-	gameData.gameMap.getBlockUnsafe(4, 4).type = Block::dirt;
+	gameData.gameMap.getBlockUnsafe(1, 1).type = Block::grass;
+	gameData.gameMap.getBlockUnsafe(2, 2).type = Block::gold;
+	gameData.gameMap.getBlockUnsafe(3, 3).type = Block::glass;
+	gameData.gameMap.getBlockUnsafe(4, 4).type = Block::platform;
 
 	gameData.camera.target = { 0.0 }; // world-space center of view
 	gameData.camera.rotation = 0.0f;
@@ -60,17 +61,19 @@ bool updateGame()
 
 			if (b.type != Block::air)
 			{
-				float size = 1;
-				float posX = x * size;
-				float posY = y * size;
+				Rectangle textureUV;
+				textureUV.width = 32;
+				textureUV.height = 32;
+				textureUV.x = b.type * 32;
+				textureUV.y = 0;
 
 				DrawTexturePro(
-					assetManager.dirt,
-					Rectangle{ 0.f, 0.f, (float)assetManager.dirt.width, (float)assetManager.dirt.height },
-					{posX, posY, size, size},
-					{ 0, 0 },
-					0.0f,
-					WHITE
+					assetManager.textures,
+					getTextureAtlas(b.type, 0, 32, 32), // source
+					{(float)x, (float)y, 1, 1}, // dest
+					{0, 0}, // origin (top-left corner)
+					0.0f, // ratation
+					WHITE // tint
 				);
 
 			}
